@@ -87,3 +87,29 @@
   (now hot-loaded, full file tools — no heredoc constraint), and
   `the self-wake timer` was cancelled. Note: the timer's NEXT had
   drifted 03:52→04:13 UTC between observations, cause unknown, now moot.
+
+## 2026-10-20 ~02:20 — split applied; zai-reset public; engine in agent-exec
+
+- CK3 (jobs/exec_job/wake/signatures/selftest) landed via the
+  flash-implementer project agent: 102 tests + real-systemd selftest 5/5,
+  independently re-verified.
+- Split executed per plans/split-and-migration-20261020.md: engine staged as
+  `delegation/` (generic: `deleg-` unit prefix, `~/.local/state/delegation`
+  root, scratch-root env override, provider policy replaced by the
+  `COORD_POLICY_CMD` hook that arms wakes from verdict fields); `zaigate/`
+  policy package (31 tests) with its own contract-side journal; old
+  `coordinator/` removed. zai-quota command-auth tests isolated from the
+  now-existing real env file.
+- Engine landed additively in the agent-exec tree
+  (`benchmarks/execution/delegation/`) with a handoff README; verified from
+  that tree: 68 tests + real-systemd selftest green, zero stray units.
+- Skills authored (zai-quota — its dormant contract test now runs;
+  agentic-delegation coordinator protocol with the engine) and installed via
+  `scripts/install.sh` into both skill roots; global AGENTS.md section added.
+- zai-reset sanitized and published **public** with a single clean-history
+  commit: https://github.com/evrenesat/zai-reset
+- Suites at split: zai-quota 59, zaigate 31, delegation 68 (in agent-exec).
+- **Open blocker (CK5)**: `zcode --prompt` fails on this host with
+  `Bundled 与 Active ZCode Built-in Release 均不可用` (headless runtime
+  resolution), so the live zcode-adapter E2E and the flash model-pinning
+  probe are deferred — see plans/followups.md.
