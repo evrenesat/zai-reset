@@ -179,8 +179,11 @@ class CliTests(RunDirTestCase):
             old = os.environ
             os.environ = env
             try:
+                import contextlib, io
                 from zaigate.__main__ import main as cli_main
-                rc = cli_main(["gate", self.run_dir, "--work-remaining", "2"])
+                with contextlib.redirect_stdout(io.StringIO()):
+                    rc = cli_main(["gate", self.run_dir,
+                                   "--work-remaining", "2"])
             finally:
                 os.environ = old
             self.assertEqual(rc, 0)
